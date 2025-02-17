@@ -1,5 +1,5 @@
 # Use Python 3.9 base image
-FROM python:3.9-bullseye
+FROM python:3.12-bullseye
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -19,9 +19,6 @@ RUN pip install --no-cache-dir poetry>=1.5
 
 # Configure Poetry
 RUN poetry config virtualenvs.create false
-
-# Regenerate poetry.lock if necessary
-RUN poetry lock
 
 # Install project dependencies (excluding dev dependencies)
 RUN poetry install --no-dev
