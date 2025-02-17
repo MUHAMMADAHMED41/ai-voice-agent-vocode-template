@@ -24,7 +24,7 @@ RUN poetry config virtualenvs.create false
 RUN poetry lock 
 
 # Install project dependencies (excluding dev dependencies)
-RUN poetry install 
+RUN poetry install --no-root
 
 # Create necessary directories
 RUN mkdir -p /code/call_transcripts /code/db
