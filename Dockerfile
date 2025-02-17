@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir poetry>=1.5
 RUN poetry config virtualenvs.create false
 
 # Install project dependencies (excluding dev dependencies)
-RUN poetry install --no-dev
+RUN poetry install 
 
 # Create necessary directories
 RUN mkdir -p /code/call_transcripts /code/db
