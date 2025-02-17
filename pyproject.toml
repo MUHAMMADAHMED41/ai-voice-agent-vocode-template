@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "telephony-app"
 version = "0.1.0"
-description = ""
+description = "A Python-based telephony application using Vocode and other libraries."
 authors = ["Your Name <you@example.com>"]
 readme = "README.md"
+license = "MIT"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
@@ -13,8 +14,12 @@ vonage = "^3.5.1"
 pyngrok = "^6.0.0"
 python-dotenv = "^1.0.0"
 vocode = "0.1.111a3"
-
+httpx = "^0.28.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+# Optional: Define an empty dev group if needed
+[tool.poetry.group.dev.dependencies]
+# No development dependencies
