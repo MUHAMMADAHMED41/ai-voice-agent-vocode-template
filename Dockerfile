@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir poetry>=1.5
 RUN poetry config virtualenvs.create false
 
 # Regenerate poetry.lock if necessary
-RUN poetry lock --no-update
+RUN poetry lock self update
 
 # Install project dependencies
 RUN poetry install --no-interaction --no-ansi
