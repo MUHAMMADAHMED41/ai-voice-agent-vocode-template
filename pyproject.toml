@@ -1,4 +1,5 @@
 [tool.poetry]
+package-mode = false
 name = "telephony-app"
 version = "0.1.0"
 description = "A Python-based telephony application using Vocode and other libraries."
