@@ -1,5 +1,5 @@
-# Use Python 3.9 base image
-FROM python:3.12-bullseye
+# Use Python 3.11 base image (compatible with <3.12)
+FROM python:3.11-bullseye
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -20,7 +20,8 @@ RUN pip install --no-cache-dir poetry>=1.5
 # Configure Poetry
 RUN poetry config virtualenvs.create false
 
-RUN poetry lock
+# Regenerate poetry.lock if necessary
+RUN poetry lock --no-update
 
 # Install project dependencies (excluding dev dependencies)
 RUN poetry install 
