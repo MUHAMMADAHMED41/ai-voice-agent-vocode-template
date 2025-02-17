@@ -12,29 +12,17 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /code
 
 # Copy project files
-COPY ./pyproject.toml /code/pyproject.toml
-COPY ./poetry.lock /code/poetry.lock
+COPY . /code
 
 # Install Poetry and configure it
 RUN pip install --no-cache-dir --upgrade poetry
 RUN poetry config virtualenvs.create false
 
-# Install project dependencies (excluding dev dependencies)
+# Regenerate poetry.lock if necessary
+RUN poetry lock --no-update
+
+# Install project dependencies
 RUN poetry install --no-interaction --no-ansi
-
-# Copy application code
-COPY main.py /code/main.py
-COPY speller_agent.py /code/speller_agent.py
-COPY memory_config.py /code/memory_config.py
-COPY events_manager.py /code/events_manager.py
-COPY config.py /code/config.py
-
-# Create necessary directories
-RUN mkdir -p /code/call_transcripts
-RUN mkdir -p /code/db
-
-# Copy utils directory
-COPY ./utils /code/utils
 
 # Expose the application port
 EXPOSE 3000
