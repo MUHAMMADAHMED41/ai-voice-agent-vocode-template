@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
 # Set working directory
 WORKDIR /code
 
@@ -16,7 +15,7 @@ COPY . /code
 
 # Install the latest version of Poetry
 RUN pip install --no-cache-dir poetry>=1.5
-
+RUN pip install httpx
 # Configure Poetry
 RUN poetry config virtualenvs.create false
 
@@ -25,9 +24,15 @@ RUN poetry lock
 
 # Install project dependencies (excluding dev dependencies)
 RUN poetry install --no-root
-
+COPY main.py /code/main.py
+COPY speller_agent.py /code/speller_agent.py
+COPY memory_config.py /code/memory_config.py
+COPY events_manager.py /code/events_manager.py
+COPY config.py /code/config.py
+COPY instructions.txt /code/instructions.txt
 # Create necessary directories
 RUN mkdir -p /code/call_transcripts /code/db
+COPY ./utils /code/utils
 
 # Expose the application port
 EXPOSE 3000
