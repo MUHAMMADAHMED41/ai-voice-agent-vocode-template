@@ -18,8 +18,8 @@ async def main():
 
     outbound_call = OutboundCall(
         base_url=BASE_URL,
-        to_phone="+923017275551",
-        from_phone="+19302221257",
+        to_phone="",
+        from_phone="",
         config_manager=config_manager,
         agent_config=SpellerAgentConfig(generate_responses=False),
     )
