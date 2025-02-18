@@ -25,11 +25,6 @@ load_dotenv()
 
 app = FastAPI(docs_url=None)
 
-# Add a root endpoint for health checks
-@app.get("/")
-async def root():
-    return {"message": "Service is running!"}
-
 # Initialize logging
 logging.basicConfig()
 logger = logging.getLogger(__name__)
