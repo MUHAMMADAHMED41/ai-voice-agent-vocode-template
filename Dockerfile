@@ -35,7 +35,7 @@ RUN mkdir -p /code/call_transcripts /code/db
 COPY ./utils /code/utils
 
 # Expose the application port
-EXPOSE 4000
+EXPOSE 3000
 
 # Run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "4000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "3000"]
