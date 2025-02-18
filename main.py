@@ -25,6 +25,11 @@ load_dotenv()
 
 app = FastAPI(docs_url=None)
 
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
+
 # Initialize logging
 logging.basicConfig()
 logger = logging.getLogger(__name__)
