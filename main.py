@@ -1,8 +1,11 @@
 import logging
 import os
+
 from config import BASE_URL
+
 from fastapi import FastAPI
 from vocode.streaming.models.telephony import TwilioConfig
+
 # Import both if using ngrok
 # from pyngrok import ngrok
 # import sys
@@ -14,21 +17,20 @@ from vocode.streaming.telephony.server.base import (
     TelephonyServer,
 )
 from vocode.streaming.models.synthesizer import StreamElementsSynthesizerConfig # ,ElevenLabsSynthesizerConfig
+
 # Imports our custom actions
 from speller_agent import SpellerAgentFactory
+
 # Imports additional events like transcripts
 from events_manager import EventsManager
+
 # if running from python, this will load the local .env
 # docker-compose will load the .env file by itself
 from dotenv import load_dotenv
+
 load_dotenv()
 
 app = FastAPI(docs_url=None)
-
-
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy"}
 
 # Initialize logging
 logging.basicConfig()
@@ -50,9 +52,11 @@ CONFIG_MANAGER = config_manager  #RedisConfigManager()
 #     BASE_URL = ngrok.connect(port).public_url.replace("https://", "")
 #     logger.info('ngrok tunnel "{}" -> "http://127.0.0.1:{}"'.format(BASE_URL, port))
 # 
+
 # Only continue of the base URL was set within the environment variable. 
 if not BASE_URL:
     raise ValueError("BASE_URL must be set in environment if not using pyngrok")
+
 
 # Now we need a Twilio account and number from which to make our call.
 # You can make an account here: https://www.twilio.com/docs/iam/access-tokens#step-2-api-key
@@ -64,6 +68,7 @@ TWILIO_CONFIG = TwilioConfig(
 
 # Get the instructions for the assistant
 def get_assistant_instructions():
+
   # Open the file and read its contents
   with open('instructions.txt', 'r') as file:
     return file.read()
@@ -82,6 +87,7 @@ AGENT_CONFIG = ChatGPTAgentConfig(
 # Our default speech to text engine is DeepGram, so you'll need to set
 # the env variable DEEPGRAM_API_KEY to your Deepgram API key.
 # https://deepgram.com/
+
 # We use StreamElements for speech synthesis here because it's fast and
 # free, but there are plenty of other options that are slower but
 # higher quality (like Eleven Labs below, needs key) available in
@@ -89,6 +95,8 @@ AGENT_CONFIG = ChatGPTAgentConfig(
 SYNTH_CONFIG = StreamElementsSynthesizerConfig.from_telephone_output_device()
 # SYNTH_CONFIG = ElevenLabsSynthesizerConfig.from_telephone_output_device(
 #   api_key=os.getenv("ELEVEN_LABS_API_KEY") or "<your EL token>")
+
+
 
 # This is where we spin up the Telephony server to get the calls running
 telephony_server = TelephonyServer(
